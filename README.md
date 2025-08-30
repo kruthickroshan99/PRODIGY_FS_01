@@ -99,7 +99,8 @@ For production deployment, implement these security enhancements:
 ## Screenshots
 
 ### Login Page
-![Login Interface](<img width="1919" height="910" alt="image" src="https://github.com/user-attachments/assets/554d2ead-686c-4e1d-8c2f-bbef08083b60" />
+![Login Interface](<img width="1919" height="910" alt="Screenshot 2025-08-30 133503" src="https://github.com/user-attachments/assets/2510c215-eeb7-40f7-af1b-c378ea805f5d" />
+
 )
 
 ### Registration Form
@@ -107,7 +108,8 @@ For production deployment, implement these security enhancements:
 )
 
 ### Dashboard
-![User Dashboard](d5ecfa01-9a1c-42c8-b071-96f0c52f7069
+![User Dashboard](<img width="1919" height="909" alt="Screenshot 2025-08-30 133542" src="https://github.com/user-attachments/assets/c9fec739-2065-4e9b-a997-c97e26d56b1a" />
+
 )
 
 ### Password Reset
