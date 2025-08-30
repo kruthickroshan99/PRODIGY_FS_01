@@ -65,20 +65,6 @@ This is a frontend-only demonstration. In production, you would implement these 
 - `GET /api/auth/profile` - Get user profile
 - `PUT /api/auth/change-password` - Change password
 
-## File Structure
-
-```
-secure-auth-system/
-│
-├── index.html              # Main application file
-├── README.md              # Project documentation
-└── assets/
-    ├── styles/
-    │   └── main.css       # (Embedded in HTML)
-    └── scripts/
-        └── auth.js        # (Embedded in HTML)
-```
-
 ## Technology Stack
 
 - **Frontend**: HTML5, CSS3, Vanilla JavaScript
@@ -117,10 +103,6 @@ For production deployment, implement these security enhancements:
 3. Commit your changes (`git commit -am 'Add new feature'`)
 4. Push to the branch (`git push origin feature/new-feature`)
 5. Create a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Support
 
