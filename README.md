@@ -107,7 +107,7 @@ For production deployment, implement these security enhancements:
 )
 
 ### Dashboard
-![User Dashboard](<img width="1919" height="909" alt="image" src="https://github.com/user-attachments/assets/d5ecfa01-9a1c-42c8-b071-96f0c52f7069" />
+![User Dashboard](d5ecfa01-9a1c-42c8-b071-96f0c52f7069
 )
 
 ### Password Reset
