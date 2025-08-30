@@ -19,7 +19,7 @@ Create a comprehensive user authentication system with secure login and registra
 
 1. Clone this repository:
    ```
-   git clone https://github.com/yourusername/secure-auth-system.git
+   [git clone https://github.com/yourusername/secure-auth-system.git](https://github.com/kruthickroshan99/PRODIGY_FS_01)
    ```
 
 2. Open the application:
