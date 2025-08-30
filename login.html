@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Authentication System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6ad2ff 0%, #e4f7ff 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgb(225, 248, 255);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #6ad2ff, #e4f7ff);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"], select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #96d8ff;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #0cb6ff 0%, #b7e7ff 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+            margin-top: 15px;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            padding: 10px;
+            background: #ffeaea;
+            border-radius: 5px;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .success {
+            color: #27ae60;
+            font-size: 14px;
+            margin-top: 5px;
+            padding: 10px;
+            background: #eafaf1;
+            border-radius: 5px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .dashboard {
+            text-align: center;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+
+        .role-admin {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .role-moderator {
+            background: #f39c12;
+            color: white;
+        }
+
+        .role-user {
+            background: #3498db;
+            color: white;
+        }
+
+        .protected-content {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e1e5e9;
+        }
+
+        .admin-only {
+            border-color: #e74c3c;
+            background: #fdf2f2;
+        }
+
+        .moderator-only {
+            border-color: #f39c12;
+            background: #fef9e7;
+        }
+
+        .password-strength {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+
+        .strength-weak { color: #e74c3c; }
+        .strength-medium { color: #f39c12; }
+        .strength-strong { color: #27ae60; }
+
+        .form-toggle {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .form-toggle a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .form-toggle a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Form -->
+        <div id="loginForm">
+            <h1>Login</h1>
+            <form id="loginFormElement">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div id="loginError" class="error hidden"></div>
+            </form>
+            <div class="form-toggle">
+                Don't have an account? <a href="#" onclick="showRegisterForm()">Sign up</a><br>
+                <a href="#" onclick="showPasswordResetForm()">Forgot Password?</a>
+            </div>
+        </div>
+
+        <!-- Registration Form -->
+        <div id="registerForm" class="hidden">
+            <h1>Sign Up</h1>
+            <form id="registerFormElement">
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" required>
+                    <div id="passwordStrength" class="password-strength"></div>
+                </div>
+                <div class="form-group">
+                    <label for="registerRole">Role</label>
+                    <select id="registerRole">
+                        <option value="user">User</option>
+                        <option value="moderator">Moderator</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Sign Up</button>
+                <div id="registerError" class="error hidden"></div>
+                <div id="registerSuccess" class="success hidden"></div>
+            </form>
+            <div class="form-toggle">
+                Already have an account? <a href="#" onclick="showLoginForm()">Login</a>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="dashboard hidden">
+            <h1>Dashboard</h1>
+            <div class="user-info">
+                <h3>Welcome, <span id="userName"></span>!</h3>
+                <p>Email: <span id="userEmail"></span></p>
+                <p>Role: <span id="userRole"></span><span id="roleBadge" class="role-badge"></span></p>
+                <p>Last Login: <span id="lastLogin"></span></p>
+            </div>
+
+            <div class="protected-content">
+                <h3>🔓 General Content</h3>
+                <p>This content is available to all authenticated users.</p>
+            </div>
+
+            <div id="moderatorContent" class="protected-content moderator-only hidden">
+                <h3>🛡️ Moderator Content</h3>
+                <p>This content is only available to moderators and admins.</p>
+                <p>You can moderate user content and manage community guidelines.</p>
+            </div>
+
+            <div id="adminContent" class="protected-content admin-only hidden">
+                <h3>⚡ Admin Content</h3>
+                <p>This content is only available to administrators.</p>
+                <p>You have full access to system management and user administration.</p>
+            </div>
+
+            <button class="btn btn-secondary" onclick="changePassword()">Change Password</button>
+            <button class="btn btn-danger" onclick="logout()">Logout</button>
+        </div>
+
+        <!-- Password Reset Form -->
+        <div id="passwordResetForm" class="hidden">
+            <h1>Reset Password</h1>
+            <form id="passwordResetFormElement">
+                <div class="form-group">
+                    <label for="resetEmail">Email</label>
+                    <input type="email" id="resetEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="resetNewPassword">New Password</label>
+                    <input type="password" id="resetNewPassword" required>
+                    <div id="resetPasswordStrength" class="password-strength"></div>
+                </div>
+                <div class="form-group">
+                    <label for="resetConfirmPassword">Confirm New Password</label>
+                    <input type="password" id="resetConfirmPassword" required>
+                </div>
+                <button type="submit" class="btn">Reset Password</button>
+                <button type="button" class="btn btn-secondary" onclick="showLoginForm()">Back to Login</button>
+                <div id="resetError" class="error hidden"></div>
+                <div id="resetSuccess" class="success hidden"></div>
+            </form>
+            <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107; font-size: 14px;">
+                <strong>Demo Mode:</strong> In this demo, you can reset any user's password by just entering their email. 
+                In production, this would require email verification.
+            </div>
+        </div>
+
+        <!-- Change Password Form -->
+        <div id="changePasswordForm" class="hidden">
+            <h1>Change Password</h1>
+            <form id="changePasswordFormElement">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" required>
+                    <div id="newPasswordStrength" class="password-strength"></div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn">Update Password</button>
+                <button type="button" class="btn btn-secondary" onclick="showDashboard()">Cancel</button>
+                <div id="changePasswordError" class="error hidden"></div>
+                <div id="changePasswordSuccess" class="success hidden"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Simulated database - In production, this would be a real database
+        let users = [
+            {
+                id: 1,
+                name: "Admin User",
+                email: "admin@example.com",
+                password: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8", // "password" hashed
+                role: "admin",
+                lastLogin: null
+            }
+        ];
+
+        let currentUser = null;
+        let currentSession = null;
+
+        // Simple hash function for password hashing (in production, use proper bcrypt)
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Session management
+        function createSession(user) {
+            const sessionId = Math.random().toString(36).substr(2, 9);
+            const session = {
+                id: sessionId,
+                userId: user.id,
+                createdAt: new Date(),
+                expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000) // 24 hours
+            };
+            currentSession = session;
+            return session;
+        }
+
+        function validateSession() {
+            if (!currentSession) return false;
+            if (new Date() > currentSession.expiresAt) {
+                currentSession = null;
+                return false;
+            }
+            return true;
+        }
+
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            let feedback = [];
+
+            if (password.length >= 8) strength += 1;
+            else feedback.push("At least 8 characters");
+
+            if (/[a-z]/.test(password)) strength += 1;
+            else feedback.push("lowercase letter");
+
+            if (/[A-Z]/.test(password)) strength += 1;
+            else feedback.push("uppercase letter");
+
+            if (/[0-9]/.test(password)) strength += 1;
+            else feedback.push("number");
+
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+            else feedback.push("special character");
+
+            return { strength, feedback };
+        }
+
+        function updatePasswordStrength(elementId, password) {
+            const element = document.getElementById(elementId);
+            const { strength, feedback } = checkPasswordStrength(password);
+
+            let strengthText = '';
+            let className = '';
+
+            if (strength < 3) {
+                strengthText = `Weak - Missing: ${feedback.join(', ')}`;
+                className = 'strength-weak';
+            } else if (strength < 5) {
+                strengthText = `Medium - Missing: ${feedback.join(', ')}`;
+                className = 'strength-medium';
+            } else {
+                strengthText = 'Strong password';
+                className = 'strength-strong';
+            }
+
+            element.textContent = strengthText;
+            element.className = `password-strength ${className}`;
+        }
+
+        // Form validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.classList.remove('hidden');
+            setTimeout(() => element.classList.add('hidden'), 5000);
+        }
+
+        function showSuccess(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.classList.remove('hidden');
+            setTimeout(() => element.classList.add('hidden'), 5000);
+        }
+
+        // Navigation functions
+        function showLoginForm() {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('changePasswordForm').classList.add('hidden');
+            document.getElementById('passwordResetForm').classList.add('hidden');
+        }
+
+        function showPasswordResetForm() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('changePasswordForm').classList.add('hidden');
+            document.getElementById('passwordResetForm').classList.remove('hidden');
+        }
+
+        function showRegisterForm() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('changePasswordForm').classList.add('hidden');
+        }
+
+        function showDashboard() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            document.getElementById('changePasswordForm').classList.add('hidden');
+            
+            updateDashboard();
+        }
+
+        function changePassword() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('changePasswordForm').classList.remove('hidden');
+        }
+
+        // Update dashboard content based on user role
+        function updateDashboard() {
+            if (!currentUser) return;
+
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userEmail').textContent = currentUser.email;
+            document.getElementById('userRole').textContent = currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1);
+            document.getElementById('lastLogin').textContent = currentUser.lastLogin ? 
+                new Date(currentUser.lastLogin).toLocaleString() : 'First time login';
+
+            const roleBadge = document.getElementById('roleBadge');
+            roleBadge.textContent = currentUser.role;
+            roleBadge.className = `role-badge role-${currentUser.role}`;
+
+            // Show role-based content
+            const moderatorContent = document.getElementById('moderatorContent');
+            const adminContent = document.getElementById('adminContent');
+
+            if (currentUser.role === 'admin') {
+                moderatorContent.classList.remove('hidden');
+                adminContent.classList.remove('hidden');
+            } else if (currentUser.role === 'moderator') {
+                moderatorContent.classList.remove('hidden');
+                adminContent.classList.add('hidden');
+            } else {
+                moderatorContent.classList.add('hidden');
+                adminContent.classList.add('hidden');
+            }
+        }
+
+        // Password reset function
+        async function resetPassword(email, newPassword) {
+            // Find user by email
+            const userIndex = users.findIndex(u => u.email.toLowerCase() === email.toLowerCase());
+            
+            if (userIndex === -1) {
+                throw new Error('No account found with this email address');
+            }
+
+            // Validate new password
+            if (newPassword.length < 6) {
+                throw new Error('New password must be at least 6 characters');
+            }
+
+            // Update password
+            const hashedPassword = await hashPassword(newPassword);
+            users[userIndex].password = hashedPassword;
+            
+            return users[userIndex];
+        }
+        async function login(email, password) {
+            const hashedPassword = await hashPassword(password);
+            const user = users.find(u => u.email === email && u.password === hashedPassword);
+
+            if (!user) {
+                throw new Error('Invalid email or password');
+            }
+
+            // Update last login
+            user.lastLogin = new Date().toISOString();
+            currentUser = user;
+            createSession(user);
+            
+            return user;
+        }
+
+        async function register(name, email, password, role) {
+            // Validation
+            if (!name.trim()) throw new Error('Name is required');
+            if (!validateEmail(email)) throw new Error('Invalid email format');
+            if (password.length < 6) throw new Error('Password must be at least 6 characters');
+            
+            // Check if user already exists
+            if (users.find(u => u.email === email)) {
+                throw new Error('User already exists with this email');
+            }
+
+            // Create new user
+            const hashedPassword = await hashPassword(password);
+            const newUser = {
+                id: users.length + 1,
+                name: name.trim(),
+                email: email.toLowerCase(),
+                password: hashedPassword,
+                role: role,
+                lastLogin: null
+            };
+
+            users.push(newUser);
+            return newUser;
+        }
+
+        function logout() {
+            currentUser = null;
+            currentSession = null;
+            showLoginForm();
+        }
+
+        // Check if user is authenticated
+        function requireAuth() {
+            if (!validateSession() || !currentUser) {
+                logout();
+                return false;
+            }
+            return true;
+        }
+
+        // Event listeners
+        document.getElementById('loginFormElement').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                await login(email, password);
+                showDashboard();
+            } catch (error) {
+                showError('loginError', error.message);
+            }
+        });
+
+        document.getElementById('registerFormElement').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const role = document.getElementById('registerRole').value;
+
+            try {
+                await register(name, email, password, role);
+                showSuccess('registerSuccess', 'Account created successfully! You can now login.');
+                setTimeout(() => showLoginForm(), 2000);
+            } catch (error) {
+                showError('registerError', error.message);
+            }
+        });
+
+        document.getElementById('changePasswordFormElement').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!requireAuth()) return;
+
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            try {
+                // Verify current password
+                const hashedCurrentPassword = await hashPassword(currentPassword);
+                if (hashedCurrentPassword !== currentUser.password) {
+                    throw new Error('Current password is incorrect');
+                }
+
+                // Validate new password
+                if (newPassword.length < 6) {
+                    throw new Error('New password must be at least 6 characters');
+                }
+
+                if (newPassword !== confirmPassword) {
+                    throw new Error('New passwords do not match');
+                }
+
+                // Update password
+                currentUser.password = await hashPassword(newPassword);
+                
+                // Update user in database
+                const userIndex = users.findIndex(u => u.id === currentUser.id);
+                users[userIndex] = currentUser;
+
+                showSuccess('changePasswordSuccess', 'Password updated successfully!');
+                setTimeout(() => showDashboard(), 2000);
+            } catch (error) {
+                showError('changePasswordError', error.message);
+            }
+        });
+
+        document.getElementById('passwordResetFormElement').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('resetEmail').value;
+            const newPassword = document.getElementById('resetNewPassword').value;
+            const confirmPassword = document.getElementById('resetConfirmPassword').value;
+
+            try {
+                // Validate passwords match
+                if (newPassword !== confirmPassword) {
+                    throw new Error('Passwords do not match');
+                }
+
+                await resetPassword(email, newPassword);
+                showSuccess('resetSuccess', 'Password reset successfully! You can now login with your new password.');
+                setTimeout(() => showLoginForm(), 3000);
+            } catch (error) {
+                showError('resetError', error.message);
+            }
+        });
+
+        // Password strength indicators
+        document.getElementById('registerPassword').addEventListener('input', (e) => {
+            updatePasswordStrength('passwordStrength', e.target.value);
+        });
+
+        document.getElementById('newPassword').addEventListener('input', (e) => {
+            updatePasswordStrength('newPasswordStrength', e.target.value);
+        });
+
+        // Session timeout check
+        setInterval(() => {
+            if (currentUser && !validateSession()) {
+                alert('Your session has expired. Please login again.');
+                logout();
+            }
+        }, 60000); // Check every minute
+
+        // Initialize app
+        function init() {
+            // Check if there's a valid session (in production, this would check server-side)
+            if (!requireAuth()) {
+                showLoginForm();
+            }
+        }
+
+        // Start the application
+        init();
+    </script>
+</body>
+</html>
