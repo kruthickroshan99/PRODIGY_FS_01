@@ -96,22 +96,6 @@ For production deployment, implement these security enhancements:
 - **Failed login monitoring**
 - **Session tracking** and analytics
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/new-feature`)
-3. Commit your changes (`git commit -am 'Add new feature'`)
-4. Push to the branch (`git push origin feature/new-feature`)
-5. Create a Pull Request
-
-## Support
-
-If you encounter any issues or have questions:
-
-- **Create an issue** in this repository
-- **Check existing issues** for similar problems
-- **Read the documentation** thoroughly before reporting
-
 ## Screenshots
 
 ### Login Page
@@ -127,5 +111,3 @@ If you encounter any issues or have questions:
 ![Password Reset](https://via.placeholder.com/600x400/f39c12/ffffff?text=Password+Reset)
 
 ---
-
-**⚠️ Note**: This is a demonstration project for educational purposes. Do not use in production without implementing proper backend security measures and database storage.
