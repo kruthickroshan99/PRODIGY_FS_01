@@ -24,7 +24,7 @@ Create a comprehensive user authentication system with secure login and registra
 
 2. Open the application:
    ```
-   Open index.html in your web browser
+   Open main.html in your web browser
    ```
 
 3. Start using the authentication system with the default admin account or create your own account.
