@@ -111,7 +111,8 @@ For production deployment, implement these security enhancements:
 )
 
 ### Password Reset
-![Password Reset](<img width="1918" height="911" alt="image" src="https://github.com/user-attachments/assets/3f1451c3-1c04-41e9-bfbe-fd2ba465d4e8" />
+![Password Reset](<img width="1919" height="913" alt="Screenshot 2025-08-30 133646" src="https://github.com/user-attachments/assets/4e378f23-8055-4915-af8c-109d6ce863bb" />
+
 )
 
 ---
