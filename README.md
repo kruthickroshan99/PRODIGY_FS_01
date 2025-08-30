@@ -104,7 +104,8 @@ For production deployment, implement these security enhancements:
 )
 
 ### Registration Form
-![Registration Form](<img width="1919" height="913" alt="Screenshot 2025-08-30 133646" src="https://github.com/user-attachments/assets/4e378f23-8055-4915-af8c-109d6ce863bb" />
+![Registration Form](<img width="1919" height="913" alt="Screenshot 2025-08-30 133646" src="https://github.com/user-attachments/assets/2d29ae11-6d62-4fdb-b8e7-2609c0a93f23" />
+
 )
 
 ### Dashboard
