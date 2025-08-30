@@ -99,15 +99,19 @@ For production deployment, implement these security enhancements:
 ## Screenshots
 
 ### Login Page
-![Login Interface](https://via.placeholder.com/600x400/667eea/ffffff?text=Login+Page)
+![Login Interface](<img width="1919" height="910" alt="image" src="https://github.com/user-attachments/assets/554d2ead-686c-4e1d-8c2f-bbef08083b60" />
+)
 
 ### Registration Form
-![Registration Form](https://via.placeholder.com/600x400/764ba2/ffffff?text=Registration+Form)
+![Registration Form](<img width="1919" height="913" alt="image" src="https://github.com/user-attachments/assets/99428eac-8b25-4f1e-bc0b-2419266c7334" />
+)
 
 ### Dashboard
-![User Dashboard](https://via.placeholder.com/600x400/27ae60/ffffff?text=User+Dashboard)
+![User Dashboard](<img width="1919" height="909" alt="image" src="https://github.com/user-attachments/assets/d5ecfa01-9a1c-42c8-b071-96f0c52f7069" />
+)
 
 ### Password Reset
-![Password Reset](https://via.placeholder.com/600x400/f39c12/ffffff?text=Password+Reset)
+![Password Reset](<img width="1918" height="911" alt="image" src="https://github.com/user-attachments/assets/3f1451c3-1c04-41e9-bfbe-fd2ba465d4e8" />
+)
 
 ---
