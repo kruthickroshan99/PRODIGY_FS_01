@@ -35,7 +35,7 @@ For testing purposes, use these default credentials:
 
 **Admin Account:**
 - Email: `admin@example.com`
-- Password: `password`
+- Password: `admin1`
 
 ## User Roles
 
