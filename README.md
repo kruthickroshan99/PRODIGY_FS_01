@@ -99,22 +99,22 @@ For production deployment, implement these security enhancements:
 ## Screenshots
 
 ### Login Page
-![Login Interface](<img width="1919" height="910" alt="Screenshot 2025-08-30 133503" src="https://github.com/user-attachments/assets/2510c215-eeb7-40f7-af1b-c378ea805f5d" />
+(<img width="1919" height="910" alt="Screenshot 2025-08-30 133503" src="https://github.com/user-attachments/assets/2510c215-eeb7-40f7-af1b-c378ea805f5d" />
 
 )
 
 ### Registration Form
-![Registration Form](<img width="1919" height="913" alt="Screenshot 2025-08-30 133646" src="https://github.com/user-attachments/assets/2d29ae11-6d62-4fdb-b8e7-2609c0a93f23" />
+(<img width="1919" height="913" alt="Screenshot 2025-08-30 133646" src="https://github.com/user-attachments/assets/2d29ae11-6d62-4fdb-b8e7-2609c0a93f23" />
 
 )
 
 ### Dashboard
-![User Dashboard](<img width="1919" height="909" alt="Screenshot 2025-08-30 133542" src="https://github.com/user-attachments/assets/c9fec739-2065-4e9b-a997-c97e26d56b1a" />
+(<img width="1919" height="909" alt="Screenshot 2025-08-30 133542" src="https://github.com/user-attachments/assets/c9fec739-2065-4e9b-a997-c97e26d56b1a" />
 
 )
 
 ### Password Reset
-![Password Reset](<img width="1918" height="911" alt="Screenshot 2025-08-30 133401" src="https://github.com/user-attachments/assets/354cc2cb-fb29-47a5-b3ca-fefabe638f0d" />
+(<img width="1918" height="911" alt="Screenshot 2025-08-30 133401" src="https://github.com/user-attachments/assets/354cc2cb-fb29-47a5-b3ca-fefabe638f0d" />
 
 
 )
